@@ -1,0 +1,100 @@
+#canvas.before:
+#    Color: 
+#        rgba: 1, 0, 0, 1
+#    Rectangle:
+#        pos: self.pos
+#        size: self.size
+
+<ParagraphLabel@Label>:
+    size_hint_y:None
+    text_size:self.width,None
+    height:self.texture_size[1]
+
+<SearchResultLabel@Label>:
+    size_hint_y: None
+    text_size: self.width, None
+    height: self.texture_size[1]
+    halign: "center"
+    line_height: 3
+
+<MainScreen>:
+    searchInput: searchInputValue
+    resultLabelsHolder: resultLabelsHolder
+    cols: 1
+    #between top part and bottom part
+    GridLayout:
+        size: root.width, root.height
+        cols: 1
+        BoxLayout:
+            spacing: 0
+            size_hint: root.width, 0.075
+            row_default_height: 30
+            row_force_default: True
+            center: root.width / 2, root.height / 2
+            orientation: "horizontal"
+            TextInput:
+                id: searchInputValue
+                text: "Search Anything"
+                multiline: False
+                on_text: root.textinput_update_text(self.text)
+            Button:
+                on_press: root.search()
+                size_hint: 0.05, 1
+                Image:
+                    source: "images/search.png"
+                    y: self.parent.y + .5* self.parent.height -.5 * self.parent.width/self.image_ratio
+                    x: self.parent.x
+                    size: self.parent.size 
+                    stretch: True
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            size: root.width, root.height
+            GridLayout:
+                size_hint: None, None
+                id: resultLabelsHolder
+                cols: 1
+                padding: 10, 10
+                width: root.width
+                height: self.minimum_height
+
+<WikipediaPage>:
+    pageTitle: pageTitle
+    paragraphsHolder: paragraphsHolder
+
+    GridLayout:
+        size: root.width, root.height
+        cols: 1
+        BoxLayout:
+            spacing: 0
+            size_hint: root.width, 0.075
+            row_default_height: 30
+            row_force_default: True
+            center: root.width / 2, root.height / 2
+            orientation: "horizontal"
+            Button:
+                size: 40, 40
+                size_hint: None, None
+                on_press: root.returnToMain()
+                Image:
+                    source: "images/back.png"
+                    y: self.parent.y + .5* self.parent.height -.5 * self.parent.width/self.image_ratio
+                    x: self.parent.x
+                    size: self.parent.size 
+                    stretch: True 
+            Label:
+                id: pageTitle
+                text: "A PAGE"
+                multiline: False
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            size: root.width, root.height
+            GridLayout:
+                width: root.width
+                size_hint: None, None
+                cols: 1
+                id: paragraphsHolder    
+                padding: 10, 10
+                height: self.minimum_height
+    
